@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+  <h2>The XMLHttpRequest Object</h2>
+  <input id="number">
+  <button type="button" onclick="loadDoc()">Request data</button>
+  <p id="demo">Syötä positiivinen luku yläpuolella olevaan kenttään!</p>
+
+  <script>
+    function loadDoc() {
+      numberValue = document.getElementById("number").value;
+      URL="http://localhost:8888/datastructures/backend/be01.php?actorid="+numberValue;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let jsonobj = JSON.parse(xhr.responseText);
+          let outPutText="Syötteellä " + jsonobj.testing.input + "<br><br>" +
+             "algoritmi #1 antoi tulokseksi " + jsonobj.testing.output[0].sum +
+             " ajassa " + jsonobj.testing.output[0].time + ".<br><br>" +
+             "Algoritmi #2 antoi tulokseksi " + jsonobj.testing.output[1].sum +
+                         " ajassa " + jsonobj.testing.output[1].time + "<br><br>";
+          document.getElementById("demo").innerHTML = outPutText;
+        }
+      };
+      xhr.open("GET", URL, true);
+      xhr.send();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+  <h2>The XMLHttpRequest Object</h2>
+  <input id="number">
+  <button type="button" onclick="loadDoc()">Request data</button>
+  <p id="demo">Write actors id into field above!</p>
+
+  <script>
+    function loadDoc() {
+      numberValue = document.getElementById("number").value;
+      URL="http://localhost:8888/datastructures/backend/be02.php?actorid="+numberValue;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let jsonobj = JSON.parse(this.responseText);
+          let outPutText=”With actorid data "+numberValue+":<br><br>"+"First name is ”+jsonobj.firstname;
+
+    document.getElementById("demo").innerHTML = outPutText;
+
+        }
+      };
+      xhr.open("GET", URL, true);
+      xhr.send();
+    }
+  </script>
+
+</body>
+</html>
